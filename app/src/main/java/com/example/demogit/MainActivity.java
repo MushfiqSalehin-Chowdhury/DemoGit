@@ -3,6 +3,9 @@ package com.example.demogit;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,8 +15,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -35,13 +40,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     private List <Repository> repoList= new ArrayList<>();
+    Button btn,btn1;
     private RecyclerView recyclerView;
     private RepoAdapter mAdapter;
     RecyclerView.LayoutManager mlayoutManager;
     String heross[];
     ListView listView;
+    String x;
     Call<List<Repository>> call;
     Call<List<Developers>> callDev;
+    Spinner dropdown;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +61,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         recyclerView.setLayoutManager(mlayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
+        dropdown = (Spinner)findViewById(R.id.spinner1);
         String[] items = new String[]{"Today", "This Week","This Month"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(this);
+        btn=findViewById(R.id.Repository);
+        btn1=findViewById(R.id.Developers);
     }
 
 
@@ -79,26 +89,30 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public okhttp3.Response intercept(Chain chain) throws IOException {
                         Request request = chain.request();
-                        Request.Builder newRequest = request.newBuilder().header("Authorization", "Basic USER_AUTH_TOKEN");
+                        Request.Builder newRequest = request.newBuilder().header("Authorization", "TXVzaGZpcVNhbGVoaW4tQ2hvd2RodXJ5OjkxN2h1Yi5jMG0jI0BA");
                         return chain.proceed(newRequest.build());
                     }
                 });
 
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(Repo.Base_URL)
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(Repo.Base_URL).
+                    client(okHttpClientBuilder.build())
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Repo api = retrofit.create(Repo.class);
             switch (item){
                 case "Today":
                     repoList.clear();
                     call = api.getRepositoryt();
+                    x= "Today";
                     break;
                 case "This Week":
                     repoList.clear();
                     call = api.getRepositoryw();
+                    x="This Week";
                     break;
                 case "This Month":
                     repoList.clear();
                     call = api.getRepositorym();
+                    x= "This Month";
                     break;
             }
             call.enqueue(new Callback<List<Repository>>() {
@@ -134,102 +148,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
 
-            //FOR SHOWING DEVELOPERS
-      /*  Retrofit retrofit1 = new Retrofit.Builder().baseUrl(Devs.Base_URL)
+            //****FOR SHOWING DEVELOPERS****////
 
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        Devs api1 = retrofit1.create(Devs.class);
-       *//* switch (item){
-            case "Today":
-                repoList.clear();
-                call = api1.getDevt();
-                break;
-            case "This Week":
-                repoList.clear();
-                call = api1.getDevw();
-                break;
-            case "This Month":
-                repoList.clear();
-                call = api1.getDevm();
-                break;
-        }*//*
-
-        //Call<List<Developers>> callDev= api1.getDevt();
-        callDev= api1.getDevt();
-        callDev.enqueue(new Callback<List<Developers>>() {
-            @Override
-            public void onResponse(Call<List<Developers>> call, Response<List<Developers>> response) {
-                List<Developers> repositories =response.body();
-                heross =new String[repositories.size()];
-                List<String> hero = new ArrayList<>();
-                Log.i("Size: ",String.valueOf(repositories.size()));
-                for (int i = 0; i< repositories.size(); i++){
-                    *//*for (int j=0;j<repositories.get(i).getBuiltBy().size();j++){
-                     *//**//* BuiltBy builtBy= new BuiltBy(repositories.get(i).getBuiltBy().get(i).getUsername());
-                            builders.add(builtBy);*//**//*
-                           heross[j]= repositories.get(i).getBuiltBy().get(i).getUsername();
-                        }*//*
-                    heross[i]=repositories.get(i).getName();
-                    hero.add(repositories.get(i).getUsername());
-
-                    //Log.i("devs:" , heross[i]);
-                    //hero.clear();
-
-
-                }
-                try {
-                    listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,hero));
-                }
-                catch (Exception e){
-                    Log.i("list",String.valueOf(e));
-                }
-
-            }
-            @Override
-            public void onFailure(Call<List<Developers>> call, Throwable t) {
-                Log.i("Error1",t.getMessage().toString());
-            }
-        });*/
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
-    public void Repositories  (View view) {
-        mAdapter=new RepoAdapter(repoList);
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    public void GithubSignin(View view) {
-        startActivity(new Intent(MainActivity.this,LoginActivity.class));
-    }
-
-    public void Developers(View view) {
-
-
-        recyclerView.setVisibility(View.INVISIBLE);
-        listView.setVisibility(View.VISIBLE);
         Retrofit retrofit1 = new Retrofit.Builder().baseUrl(Devs.Base_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Devs api1 = retrofit1.create(Devs.class);
-       /* switch (item){
+        switch (x){
             case "Today":
                 repoList.clear();
-                call = api1.getDevt();
+                callDev = api1.getDevt();
                 break;
             case "This Week":
                 repoList.clear();
-                call = api1.getDevw();
+                callDev = api1.getDevw();
                 break;
             case "This Month":
                 repoList.clear();
-                call = api1.getDevm();
+                callDev = api1.getDevm();
                 break;
-        }*/
-
-        //Call<List<Developers>> callDev= api1.getDevt();
-        callDev= api1.getDevt();
+        }
         callDev.enqueue(new Callback<List<Developers>>() {
             @Override
             public void onResponse(Call<List<Developers>> call, Response<List<Developers>> response) {
@@ -238,21 +175,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 List<String> hero = new ArrayList<>();
                 Log.i("Size: ",String.valueOf(repositories.size()));
                 for (int i = 0; i< repositories.size(); i++){
-                    /*for (int j=0;j<repositories.get(i).getBuiltBy().size();j++){
-                     *//* BuiltBy builtBy= new BuiltBy(repositories.get(i).getBuiltBy().get(i).getUsername());
-                            builders.add(builtBy);*//*
-                           heross[j]= repositories.get(i).getBuiltBy().get(i).getUsername();
-                        }*/
-                   // heross[i]=repositories.get(i).getName();
                     hero.add(repositories.get(i).getUsername());
-
-                  //  Log.i("devs:" , heross[i]);
-                  //  hero.clear();
-
-
                 }
                 try {
                     listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,hero));
+                    //hero.clear();
                 }
                 catch (Exception e){
                     Log.i("list",String.valueOf(e));
@@ -264,5 +191,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.i("Error1",t.getMessage().toString());
             }
         });
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+    public void Repositories  (View view) {
+        btn.setBackgroundColor(Color.parseColor("#ffffffff"));
+        btn1.setBackgroundColor(Color.parseColor("#ff00ddff"));
+        recyclerView.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.INVISIBLE);
+    }
+
+    public void GithubSignin(View view)  {
+        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+    }
+
+    public void Developers(View view) {
+
+        btn1.setBackgroundColor(Color.parseColor("#ffffffff"));
+        btn.setBackgroundColor(Color.parseColor("#ff00ddff"));
+        recyclerView.setVisibility(View.INVISIBLE);
+        listView.setVisibility(View.VISIBLE);
+
     }
 }

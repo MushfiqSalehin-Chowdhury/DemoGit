@@ -27,8 +27,10 @@
        <Button
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:onClick="GithubSignin"
            android:layout_alignParentRight="true"
+           android:background="@android:color/holo_green_light"
+           android:onClick="GithubSignin"
+           android:padding="10dp"
            android:text="Sign in to Github" />
 
    </RelativeLayout>
@@ -40,23 +42,29 @@
 
         <Button
             android:id="@+id/Repository"
+            style="@style/Base.Animation.AppCompat.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repositories"
-            android:textSize="15sp"
+            android:background="@android:color/background_light"
             android:onClick="Repositories"
-            />
+            android:padding="10dp"
+            android:text="Repositories"
+            android:textSize="15sp" />
+
         <Button
             android:id="@+id/Developers"
+            style="@style/Base.Animation.AppCompat.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Developers"
+            android:layout_marginLeft="10dp"
+            android:background="@android:color/holo_blue_bright"
             android:onClick="Developers"
-            />
+            android:padding="10dp"
+            android:text="Developers"
+            android:textSize="15sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -64,9 +72,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Recycle"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:visibility="visible"
-            >
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:visibility="visible">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -74,12 +82,12 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            >
+            android:background="@android:color/background_light"
+            android:visibility="invisible">
 
         </ListView>
 
 
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
