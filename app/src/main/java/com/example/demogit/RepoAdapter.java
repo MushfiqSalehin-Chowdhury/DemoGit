@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,11 @@ public class RepoAdapter  extends RecyclerView.Adapter<RepoAdapter.MyviewHolder>
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder myviewHolder, int position) {
         Repository repository = repoList.get(position);
-        myviewHolder.reponame.setText(repository.getAuthor()+"/"+repository.getName()+"\n");
+        String text = repository.getUrl();
+        myviewHolder.reponame.setClickable(true);
+        myviewHolder.reponame.setMovementMethod(LinkMovementMethod.getInstance());
+        myviewHolder.reponame.setText(repository.getAuthor()+"/"+repository.getName()+"\n"+ Html.fromHtml(text));
+
         myviewHolder.repodetails.setText(repository.getDescription()+"\n");
 
         if(repository.getLanguageColor() != null) {

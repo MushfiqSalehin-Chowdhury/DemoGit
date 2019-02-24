@@ -3,6 +3,7 @@ package com.example.demogit;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -279,6 +280,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
+    public void userProfile(View view) {
+        startActivity(new Intent(LoginActivity.this,ProfilePageActivity.class));
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -320,6 +325,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
+
                 }
             }
 

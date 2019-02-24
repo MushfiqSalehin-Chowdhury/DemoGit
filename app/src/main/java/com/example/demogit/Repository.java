@@ -12,7 +12,10 @@ import java.util.List;
         @Expose
         private String author;
 
-        public Repository(String author, String name, String description,String language,String languageColor,Integer stars,Integer forks, Integer currentPeriodStars) {
+        public Repository() {
+        }
+
+        public Repository(String author, String name, String description, String language, String languageColor, String url,Integer stars, Integer forks, Integer currentPeriodStars) {
             this.author = author;
             this.name = name;
             this.description = description;
@@ -21,6 +24,7 @@ import java.util.List;
             this.language = language;
             this.languageColor=languageColor;
             this.forks = forks;
+            this.url=url;
         }
 
         @SerializedName("name")

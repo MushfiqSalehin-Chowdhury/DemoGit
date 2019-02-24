@@ -86,7 +86,9 @@
                 android:layout_marginTop="16dp"
                 android:background="@android:color/holo_green_light"
                 android:text="@string/action_sign_in_short"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="userProfile"
+                />
 
         </LinearLayout>
     </ScrollView>

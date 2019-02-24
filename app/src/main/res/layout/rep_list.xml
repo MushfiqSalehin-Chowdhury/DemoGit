@@ -6,14 +6,18 @@
     android:orientation="vertical"
     android:weightSum="4"
     >
+
     <TextView
         android:id="@+id/Repo_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:layout_weight="1"
-        />
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="20sp"
+
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/Repo_Details"
         android:layout_width="wrap_content"

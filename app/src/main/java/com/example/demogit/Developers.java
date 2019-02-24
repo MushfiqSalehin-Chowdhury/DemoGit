@@ -1,22 +1,23 @@
 package com.example.demogit;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BuiltBy {
+public class Developers {
+    public Developers(String username, String name) {
+        this.username = username;
+        this.name = name;
+    }
 
     @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("href")
+    @SerializedName("name")
     @Expose
-    private String href;
-
-    public BuiltBy(String username) {
-        this.username = username;
-    }
-
+    private String name;
+    @SerializedName("url")
+    @Expose
+    private String url;
     @SerializedName("avatar")
     @Expose
     private String avatar;
@@ -29,12 +30,20 @@ public class BuiltBy {
         this.username = username;
     }
 
-    public String getHref() {
-        return href;
+    public String getName() {
+        return name;
     }
 
-    public void setHref(String href) {
-        this.href = href;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getAvatar() {
@@ -44,5 +53,6 @@ public class BuiltBy {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
 
 }
