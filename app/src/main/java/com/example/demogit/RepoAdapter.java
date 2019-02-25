@@ -18,12 +18,14 @@ import java.util.Scanner;
 
 public class RepoAdapter  extends RecyclerView.Adapter<RepoAdapter.MyviewHolder> {
     private List<Repository> repoList;
+    private List<BuiltBy> builtByList;
     public class MyviewHolder extends RecyclerView.ViewHolder {
-        public TextView reponame,repodetails,lang,stars,fork,startoday;
+        public TextView reponame,address,repodetails,lang,stars,fork,startoday,builders;
         public ImageView star,forks,starToday;
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
             reponame = (TextView)itemView.findViewById(R.id.Repo_Name);
+            address = itemView.findViewById(R.id.address);
             repodetails = (TextView)itemView.findViewById(R.id.Repo_Details) ;
             lang= (TextView)itemView.findViewById(R.id.lang);
             stars = (TextView)itemView.findViewById(R.id.star) ;
@@ -32,6 +34,7 @@ public class RepoAdapter  extends RecyclerView.Adapter<RepoAdapter.MyviewHolder>
             star = itemView.findViewById(R.id.stars) ;
             forks=itemView.findViewById(R.id.fork);
             starToday = itemView.findViewById(R.id.starss) ;
+            builders=itemView.findViewById(R.id.builders);
         }
     }
     public RepoAdapter(List<Repository> userList) {
@@ -47,9 +50,12 @@ public class RepoAdapter  extends RecyclerView.Adapter<RepoAdapter.MyviewHolder>
     public void onBindViewHolder(@NonNull MyviewHolder myviewHolder, int position) {
         Repository repository = repoList.get(position);
         String text = repository.getUrl();
-        myviewHolder.reponame.setClickable(true);
-        myviewHolder.reponame.setMovementMethod(LinkMovementMethod.getInstance());
-        myviewHolder.reponame.setText(repository.getAuthor()+"/"+repository.getName()+"\n"+ Html.fromHtml(text));
+        myviewHolder.reponame.setText(repository.getAuthor()+"/"+repository.getName());
+
+        myviewHolder.address.setClickable(true);
+        myviewHolder.address.setMovementMethod(LinkMovementMethod.getInstance());
+        myviewHolder.address.setText(Html.fromHtml(text));
+
 
         myviewHolder.repodetails.setText(repository.getDescription()+"\n");
 

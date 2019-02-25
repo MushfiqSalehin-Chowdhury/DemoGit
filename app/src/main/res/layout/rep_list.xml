@@ -12,18 +12,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:linksClickable="true"
+        android:textColor="@android:color/holo_blue_light"
+        android:textColorLink="@android:color/holo_red_light"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:autoLink="web"
         android:linksClickable="true"
         android:textColor="@android:color/holo_blue_light"
-        android:textSize="20sp"
-
+        android:textColorLink="@android:color/holo_red_light"
+        android:textSize="14sp"
         android:textStyle="bold" />
+
+
     <TextView
         android:id="@+id/Repo_Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:layout_weight="1"
+        android:textStyle="bold"
         />
   <LinearLayout
       android:layout_width="match_parent"
@@ -36,6 +50,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textSize="20dp"
+          android:textStyle="bold"
           />
       <ImageView
           android:id="@+id/stars"
@@ -66,6 +81,14 @@
           android:layout_height="wrap_content"
           android:textSize="15sp"
           android:layout_gravity="left"
+          />
+
+      <TextView
+          android:id="@+id/builders"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="15sp"
+          android:layout_gravity="right"
           />
 
     </LinearLayout>

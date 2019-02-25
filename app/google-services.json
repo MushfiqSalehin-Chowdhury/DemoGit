@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "831276295194",
+    "firebase_url": "https://demogit-14dd1.firebaseio.com",
+    "project_id": "demogit-14dd1",
+    "storage_bucket": "demogit-14dd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831276295194:android:4fceae340fd94fd5",
+        "android_client_info": {
+          "package_name": "com.example.demogit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831276295194-u3dlaql572m955gvdrun66oj3hjgkqej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demogit",
+            "certificate_hash": "7e9d698a0afd7069804eb4d2863e5c8758292ae7"
+          }
+        },
+        {
+          "client_id": "831276295194-bh6tc5i7bql45okgs3m6meeqbitv6fr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6-NslQh1HeOCFepIOnv_w1k_K3twneY4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831276295194-bh6tc5i7bql45okgs3m6meeqbitv6fr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

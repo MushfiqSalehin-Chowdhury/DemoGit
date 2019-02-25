@@ -13,14 +13,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -175,16 +179,45 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 List<String> hero = new ArrayList<>();
                 Log.i("Size: ",String.valueOf(repositories.size()));
                 for (int i = 0; i< repositories.size(); i++){
-                    hero.add(repositories.get(i).getUsername());
+                    hero.add("User Name :"+repositories.get(i).getUsername()+
+                            "\n"+"Name :"+ repositories.get(i).getName()+
+                            "\n"+repositories.get(i).getUrl())
+                            ;
                 }
                 try {
-                    listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_expandable_list_item_1,hero));
+                   // (new ArrayAdapter<String>(getApplicationContext(),R.layout.dev_list,hero));
+                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                            (getApplicationContext(), android.R.layout.simple_list_item_1, hero){
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent){
+                            /// Get the Item from ListView
+                            View view = super.getView(position, convertView, parent);
+
+                            TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                            // Set the text size 25 dip for ListView each item
+                            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
+                            tv.setTextColor(Color.parseColor("#ff00ddff"));
+
+
+                            // Return the view
+                            return view;
+                        }
+                    };
+
+                    // DataBind ListView with items from ArrayAdapter
+                    listView.setAdapter(arrayAdapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+                    });
                     //hero.clear();
                 }
                 catch (Exception e){
                     Log.i("list",String.valueOf(e));
                 }
-
             }
             @Override
             public void onFailure(Call<List<Developers>> call, Throwable t) {
@@ -192,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
@@ -202,17 +234,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         recyclerView.setVisibility(View.VISIBLE);
         listView.setVisibility(View.INVISIBLE);
     }
-
     public void GithubSignin(View view)  {
         startActivity(new Intent(MainActivity.this,LoginActivity.class));
     }
-
     public void Developers(View view) {
-
         btn1.setBackgroundColor(Color.parseColor("#ffffffff"));
         btn.setBackgroundColor(Color.parseColor("#ff00ddff"));
         recyclerView.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.VISIBLE);
-
     }
 }
