@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfilePageActivity"
+    tools:context=".Activities.ProfilePageActivity"
     android:weightSum="3"
     android:orientation="vertical"
     >
@@ -14,13 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
         <TextView
             android:id="@+id/UserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="Mush"
+            android:padding="10dp"
             android:textSize="20sp"
+            android:textStyle="bold"
             />
         <Button
             android:id="@+id/gitbattle"
@@ -28,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="GitHub Battle"
+            android:onClick="gitBattle"
             />
         <Button
             android:layout_width="wrap_content"
@@ -48,6 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Popular Repositories"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textStyle="bold"
             />
     </LinearLayout>
 
@@ -55,7 +61,9 @@
     <ListView
         android:id="@+id/User_repo_List"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingTop="10dp">
 
     </ListView>
 
