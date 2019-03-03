@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -113,25 +114,30 @@ public class BattleActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         User api = retrofit.create(User.class);
         String text = playername.getText().toString();
-        call = api.getPlayer(text);
-        call.enqueue(new Callback<Player>() {
-            @Override
-            public void onResponse(Call<Player> call, Response<Player> response) {
-                Player repositories = response.body();
-                point1= repositories.getFollowers()+repositories.getFollowing();
-                tv.setText("Followers :" + repositories.getFollowers().toString() + "\n" +
-                        "Following: " + repositories.getFollowing().toString() + "\n" +
-                        "Public Reositories" + repositories.getPublicRepos().toString()
+        if(!TextUtils.isEmpty(text)) {
+            call = api.getPlayer(text);
+            call.enqueue(new Callback<Player>() {
+                @Override
+                public void onResponse(Call<Player> call, Response<Player> response) {
+                    Player repositories = response.body();
+                    point1 = repositories.getFollowers() + repositories.getFollowing();
+                    tv.setText("Followers :" + repositories.getFollowers().toString() + "\n" +
+                            "Following: " + repositories.getFollowing().toString() + "\n" +
+                            "Public Reositories" + repositories.getPublicRepos().toString()
 
-                );
-                tv.setPaintFlags(tv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            }
+                    );
+                    tv.setPaintFlags(tv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                }
 
-            @Override
-            public void onFailure(Call<Player> call, Throwable t) {
-                Log.i("Error1", t.getMessage().toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<Player> call, Throwable t) {
+                    Log.i("Error1", t.getMessage().toString());
+                }
+            });
+        }
+        else {
+            tv.setText("Invalid Player Name");
+        }
 
     }
     public void result(View view) {
@@ -141,12 +147,13 @@ public class BattleActivity extends AppCompatActivity {
         }
         else if (point<point1)
             winner2.setText("WINNER");
-        else
+        else if(point1==point)
             draw.setText("DRAW");
     }
 
     public void reSet(View view) {
         tv.setText("");
+        playername.setText("");
         winner1.setText("");
         winner2.setText("");
         draw.setText("");

@@ -43,7 +43,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/title_activity_login"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textStyle="bold"
+                />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -55,7 +57,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/colorAccent"
+                    android:textColorHint="@android:color/holo_red_light" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -72,6 +76,7 @@
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
+
                     android:maxLines="1"
                     android:singleLine="true" />
 

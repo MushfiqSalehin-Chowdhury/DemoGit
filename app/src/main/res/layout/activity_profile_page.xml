@@ -21,25 +21,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            />
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/gitbattle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="GitHub Battle"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/common_google_signin_btn_text_dark_focused"
             android:onClick="gitBattle"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/gitbattle"
-            android:text="Log out"
-            android:onClick="Logout"
-            />
+            android:padding="20dp"
+            android:text="GitHub Battle"
+            android:textColor="@color/common_google_signin_btn_text_dark_pressed" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -47,25 +45,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Popular Repositories"
-            android:textSize="20dp"
             android:gravity="center"
-            android:textStyle="bold"
-            />
+            android:text="Popular Repositories"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="30dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-
+    <ProgressBar
+        android:layout_marginTop="30dp"
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
     <ListView
         android:id="@+id/User_repo_List"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        >
 
     </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gitbattle"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_red_light"
+        android:onClick="Logout"
+        android:padding="10dp"
+        android:text="Log out" />
 
 
 

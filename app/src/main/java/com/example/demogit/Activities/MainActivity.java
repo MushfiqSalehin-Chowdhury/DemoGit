@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String x;
     Call<List<Repository>> call;
     Call<List<Developers>> callDev;
+    ProgressBar progressBar;
     Spinner dropdown;
+    DividerItemDecoration dividerItemDecoration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +63,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
        //ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         recyclerView= findViewById(R.id.Recycle);
         listView= findViewById(R.id.listView);
+       // progressBar=findViewById(R.id.progress);
         RecyclerView.LayoutManager mlayoutManager= new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mlayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        dividerItemDecoration= new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
         dropdown = (Spinner)findViewById(R.id.spinner1);
         String[] items = new String[]{"Today", "This Week","This Month"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -71,17 +77,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         dropdown.setOnItemSelectedListener(this);
         btn=findViewById(R.id.Repository);
         btn1=findViewById(R.id.Developers);
+
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
     }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         String item = parent.getItemAtPosition(position).toString();
 
         //FOR SHOWING REPOSITORIES
@@ -101,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     client(okHttpClientBuilder.build())
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Repo api = retrofit.create(Repo.class);
+
+
             switch (item){
                 case "Today":
                     repoList.clear();
@@ -118,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     x= "This Month";
                     break;
             }
-            call.enqueue(new Callback<List<Repository>>() {
+
+
+        call.enqueue(new Callback<List<Repository>>() {
                 @Override
                 public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
                     List<Repository> repositories =response.body();
@@ -156,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Retrofit retrofit1 = new Retrofit.Builder().baseUrl(Devs.Base_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Devs api1 = retrofit1.create(Devs.class);
+
         switch (x){
             case "Today":
                 repoList.clear();
@@ -170,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 callDev = api1.getDevm();
                 break;
         }
+
         callDev.enqueue(new Callback<List<Developers>>() {
             @Override
             public void onResponse(Call<List<Developers>> call, Response<List<Developers>> response) {
@@ -195,8 +205,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
                             // Set the text size 25 dip for ListView each item
-                            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-                            tv.setTextColor(Color.parseColor("#ff00ddff"));
+                            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+                            tv.setTextColor(Color.parseColor("#ff0099cc"));
+
 
 
                             // Return the view
@@ -226,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
     }
     public void Repositories  (View view) {
         btn.setBackgroundColor(Color.parseColor("#ffffffff"));

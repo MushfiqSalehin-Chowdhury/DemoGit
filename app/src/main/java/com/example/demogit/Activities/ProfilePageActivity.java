@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     String heross,text;
     ListView listView;
     TextView userName;
+    ProgressBar progressBar;
    // EditText email;
     //public AutoCompleteTextView mEmailView;
 
@@ -48,12 +50,9 @@ public class ProfilePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         listView=findViewById(R.id.User_repo_List);
+        progressBar=findViewById(R.id.progress);
+        progressBar.setProgress(2);
         userName= findViewById(R.id.UserName);
-
-       // email = findViewById(R.id.email);
-       // mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
-
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder
                 .addInterceptor(new Interceptor() {
@@ -65,7 +64,7 @@ public class ProfilePageActivity extends AppCompatActivity {
                     }
                 });
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(User.Base_URL)
+        Retrofit retrofit = new Retrofit.Builder().client(okHttpClientBuilder.build()).baseUrl(User.Base_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         User api = retrofit.create(User.class);
         Intent i = getIntent();
@@ -97,19 +96,18 @@ public class ProfilePageActivity extends AppCompatActivity {
                             // Set the text size 25 dip for ListView each item
                             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
                             tv.setTextColor(Color.BLUE);
-
-
                             // Return the view
                             return view;
                         }
                     };
 
+                    Thread.sleep(3000);
+                    progressBar.setVisibility(View.GONE);
                     // DataBind ListView with items from ArrayAdapter
                     listView.setAdapter(arrayAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                         }
                     });
                     //hero.clear();
@@ -120,8 +118,13 @@ public class ProfilePageActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<List<UserRepo>> call, Throwable t) {
-                Log.i("Error1",t.getMessage().toString());
-                Toast.makeText(ProfilePageActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                try{
+                    Log.i("Error1",t.getMessage().toString());
+                    Toast.makeText(ProfilePageActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e){
+                    Log.i("er",String.valueOf(e));
+                }
             }
         });
 

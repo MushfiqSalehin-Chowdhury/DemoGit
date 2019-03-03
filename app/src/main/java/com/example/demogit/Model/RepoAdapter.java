@@ -63,11 +63,11 @@ public class RepoAdapter  extends RecyclerView.Adapter<RepoAdapter.MyviewHolder>
             myviewHolder.lang.setTextColor(Color.parseColor(repository.getLanguageColor()));
         }
         myviewHolder.star.setImageResource(R.drawable.star);
-        myviewHolder.stars.setText(repository.getStars().toString()+"\t\t\t");
+        myviewHolder.stars.setText("\t"+repository.getStars().toString()+"\t\t\t");
         myviewHolder.forks.setImageResource(R.drawable.fork);
         myviewHolder.fork.setText(repository.getForks().toString()+"\n");
         myviewHolder.starToday.setImageResource(R.drawable.star);
-        myviewHolder.startoday.setText(repository.getCurrentPeriodStars().toString()+" "+"Stars Today");
+        myviewHolder.startoday.setText("\t"+repository.getCurrentPeriodStars().toString()+" "+"Stars Today");
     }
     @Override
     public int getItemCount() {
