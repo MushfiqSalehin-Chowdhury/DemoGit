@@ -41,9 +41,6 @@ public class ProfilePageActivity extends AppCompatActivity {
     ListView listView;
     TextView userName;
     ProgressBar progressBar;
-   // EditText email;
-    //public AutoCompleteTextView mEmailView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +65,9 @@ public class ProfilePageActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         User api = retrofit.create(User.class);
         Intent i = getIntent();
-        text = i.getStringExtra ( "TextBox");
+        text = i.getStringExtra ( "Username");
         userName.setText(text);
         call = api.getOwner(text);
-       // Log.i("nameee: ",email.getText().toString());
         call.enqueue(new Callback<List<UserRepo>>() {
             @Override
             public void onResponse(Call<List<UserRepo>> call, Response<List<UserRepo>> response) {
@@ -83,27 +79,20 @@ public class ProfilePageActivity extends AppCompatActivity {
                     ;
                 }
                 try {
-                    // (new ArrayAdapter<String>(getApplicationContext(),R.layout.dev_list,hero));
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                             (getApplicationContext(), android.R.layout.simple_list_item_1, repo){
                         @Override
                         public View getView(int position, View convertView, ViewGroup parent){
-                            /// Get the Item from ListView
                             View view = super.getView(position, convertView, parent);
-
                             TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                            // Set the text size 25 dip for ListView each item
                             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
                             tv.setTextColor(Color.BLUE);
-                            // Return the view
                             return view;
                         }
                     };
 
                     Thread.sleep(3000);
                     progressBar.setVisibility(View.GONE);
-                    // DataBind ListView with items from ArrayAdapter
                     listView.setAdapter(arrayAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -127,16 +116,14 @@ public class ProfilePageActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
     public void Logout(View view) {
         finish();
         startActivity(new Intent(ProfilePageActivity.this, MainActivity.class));
     }
-
     public void gitBattle(View view) {
         Intent intent = new Intent (this,BattleActivity.class );
-        intent.putExtra ( "TextBox",text );
+        intent.putExtra ( "Username",text );
         startActivity(intent);
     }
 }

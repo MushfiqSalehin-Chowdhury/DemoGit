@@ -42,8 +42,6 @@ public class BattleActivity extends AppCompatActivity {
     Call<Player> call;
     TextView tv,tv1;
     public int point,point1;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +53,10 @@ public class BattleActivity extends AppCompatActivity {
         winner1=findViewById(R.id.winner1);
         winner2 = findViewById(R.id.winner2);
         draw=findViewById(R.id.draw);
-
         Intent i = getIntent();
-        String text = i.getStringExtra ( "TextBox");
+        String text = i.getStringExtra ( "Username");
         loggedinName.setText(text);
         loggedinName.setPaintFlags(loggedinName.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder
                 .addInterceptor(new Interceptor() {
@@ -71,7 +67,6 @@ public class BattleActivity extends AppCompatActivity {
                         return chain.proceed(newRequest.build());
                     }
                 });
-
         Retrofit retrofit = new Retrofit.Builder().baseUrl(User.Base_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         User api = retrofit.create(User.class);
@@ -80,13 +75,10 @@ public class BattleActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Player> call, Response<Player> response) {
                 Player repositories =response.body();
-
                 point= repositories.getFollowers()+repositories.getFollowing();
-
                 tv1.setText("Followers :"+repositories.getFollowers().toString()+"\n"+
                         "Following: "+repositories.getFollowing().toString()+"\n"+
-                        "Public Reositories"+ repositories.getPublicRepos().toString()
-
+                        "Public Reositories: "+ repositories.getPublicRepos().toString()
                 );
                 tv1.setPaintFlags(tv1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
@@ -95,9 +87,7 @@ public class BattleActivity extends AppCompatActivity {
                 Log.i("Error1",t.getMessage().toString());
             }
         });
-
     }
-
     public void findPlayer(View view) {
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder
@@ -105,11 +95,10 @@ public class BattleActivity extends AppCompatActivity {
                     @Override
                     public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
                         Request request = chain.request();
-                        Request.Builder newRequest = request.newBuilder().header("Authorization", "TXVzaGZpcVNhbGVoaW4tQ2hvd2RodXJ5OjkxN2h1Yi5jMG0jI0BA");
+                        Request.Builder newRequest = request.newBuilder().header("Authorization", " 5ceac502214f05c703c16f3fac3f6478acfd2052");
                         return chain.proceed(newRequest.build());
                     }
                 });
-
         Retrofit retrofit = new Retrofit.Builder().baseUrl(User.Base_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         User api = retrofit.create(User.class);
@@ -123,12 +112,10 @@ public class BattleActivity extends AppCompatActivity {
                     point1 = repositories.getFollowers() + repositories.getFollowing();
                     tv.setText("Followers :" + repositories.getFollowers().toString() + "\n" +
                             "Following: " + repositories.getFollowing().toString() + "\n" +
-                            "Public Reositories" + repositories.getPublicRepos().toString()
-
+                            "Public Reositories: " + repositories.getPublicRepos().toString()
                     );
                     tv.setPaintFlags(tv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                 }
-
                 @Override
                 public void onFailure(Call<Player> call, Throwable t) {
                     Log.i("Error1", t.getMessage().toString());
@@ -138,7 +125,6 @@ public class BattleActivity extends AppCompatActivity {
         else {
             tv.setText("Invalid Player Name");
         }
-
     }
     public void result(View view) {
 
@@ -159,4 +145,3 @@ public class BattleActivity extends AppCompatActivity {
         draw.setText("");
     }
 }
-

@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       //ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         recyclerView= findViewById(R.id.Recycle);
         listView= findViewById(R.id.listView);
        // progressBar=findViewById(R.id.progress);
@@ -79,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btn1=findViewById(R.id.Developers);
 
     }
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     @Override
                     public okhttp3.Response intercept(Chain chain) throws IOException {
                         Request request = chain.request();
-                        Request.Builder newRequest = request.newBuilder().header("Authorization", "TXVzaGZpcVNhbGVoaW4tQ2hvd2RodXJ5OjkxN2h1Yi5jMG0jI0BA");
+                        Request.Builder newRequest = request.newBuilder().header("Authorization", " 5ceac502214f05c703c16f3fac3f6478acfd2052");
                         return chain.proceed(newRequest.build());
                     }
                 });
@@ -105,8 +102,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     client(okHttpClientBuilder.build())
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Repo api = retrofit.create(Repo.class);
-
-
             switch (item){
                 case "Today":
                     repoList.clear();
@@ -124,19 +119,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     x= "This Month";
                     break;
             }
-
-
         call.enqueue(new Callback<List<Repository>>() {
                 @Override
                 public void onResponse(Call<List<Repository>> call, Response<List<Repository>> response) {
                     List<Repository> repositories =response.body();
                     heross =new String[repositories.size()];
                     for (int i = 0; i< repositories.size(); i++){
-                        /*for (int j=0;j<repositories.get(i).getBuiltBy().size();j++){
-                           *//* BuiltBy builtBy= new BuiltBy(repositories.get(i).getBuiltBy().get(i).getUsername());
-                            builders.add(builtBy);*//*
-                           heross[j]= repositories.get(i).getBuiltBy().get(i).getUsername();
-                        }*/
                         Repository repository = new Repository(repositories.get(i).getAuthor()
                                 ,repositories.get(i).getName(),
                                 repositories.get(i).getDescription(),
@@ -179,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 callDev = api1.getDevm();
                 break;
         }
-
         callDev.enqueue(new Callback<List<Developers>>() {
             @Override
             public void onResponse(Call<List<Developers>> call, Response<List<Developers>> response) {
@@ -190,32 +177,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 for (int i = 0; i< repositories.size(); i++){
                     hero.add("User Name :"+repositories.get(i).getUsername()+
                             "\n"+"Name :"+ repositories.get(i).getName()+
-                            "\n"+repositories.get(i).getUrl())
-                            ;
+                            "\n"+repositories.get(i).getUrl());
                 }
                 try {
-                   // (new ArrayAdapter<String>(getApplicationContext(),R.layout.dev_list,hero));
                      ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                             (getApplicationContext(), android.R.layout.simple_list_item_1, hero){
                         @Override
                         public View getView(int position, View convertView, ViewGroup parent){
-                            /// Get the Item from ListView
                             View view = super.getView(position, convertView, parent);
-
                             TextView tv = (TextView) view.findViewById(android.R.id.text1);
-
-                            // Set the text size 25 dip for ListView each item
                             tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
                             tv.setTextColor(Color.parseColor("#ff0099cc"));
-
-
-
-                            // Return the view
                             return view;
                         }
                     };
-
-                    // DataBind ListView with items from ArrayAdapter
                     listView.setAdapter(arrayAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -223,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                         }
                     });
-                    //hero.clear();
                 }
                 catch (Exception e){
                     Log.i("list",String.valueOf(e));
@@ -240,8 +214,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
     public void Repositories  (View view) {
-        btn.setBackgroundColor(Color.parseColor("#ffffffff"));
-        btn1.setBackgroundColor(Color.parseColor("#ff00ddff"));
+        btn.setBackgroundResource(R.drawable.button2);
+        btn1.setBackgroundResource(R.drawable.button);
         recyclerView.setVisibility(View.VISIBLE);
         listView.setVisibility(View.INVISIBLE);
     }
@@ -249,8 +223,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(new Intent(MainActivity.this,LoginActivity.class));
     }
     public void Developers(View view) {
-        btn1.setBackgroundColor(Color.parseColor("#ffffffff"));
-        btn.setBackgroundColor(Color.parseColor("#ff00ddff"));
+        btn1.setBackgroundResource(R.drawable.button2);
+        btn.setBackgroundResource(R.drawable.button);
         recyclerView.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.VISIBLE);
     }

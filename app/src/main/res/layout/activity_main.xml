@@ -26,14 +26,15 @@
 
        </Spinner>
 
-       <Button
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentRight="true"
-           android:background="@drawable/button"
-           android:onClick="GithubSignin"
-           android:padding="10dp"
-           android:text="Sign in to Github" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/button"
+            android:onClick="GithubSignin"
+            android:padding="10dp"
+            android:text="Sign in to Github" />
 
    </RelativeLayout>
     <LinearLayout
@@ -47,7 +48,7 @@
             style="@style/Base.Animation.AppCompat.Dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/background_light"
+            android:background="@drawable/button2"
             android:onClick="Repositories"
             android:padding="10dp"
             android:text="Repositories"
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@android:color/holo_green_light"
+            android:background="@drawable/button"
             android:onClick="Developers"
             android:padding="10dp"
             android:text="Developers"

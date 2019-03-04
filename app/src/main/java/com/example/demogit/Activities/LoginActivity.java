@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(email.getText().toString())) {
             Intent intent = new Intent(this, ProfilePageActivity.class);
-            intent.putExtra("TextBox", email.getText().toString());
+            intent.putExtra("Username", email.getText().toString());
             startActivity(intent);
         }
         else
